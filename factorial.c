@@ -2,7 +2,6 @@
 #define tab_max_size 7500
 
 void factorial(short num);
-void factorial_bad(short num);
 
 int main()
 {
@@ -98,81 +97,3 @@ short int nie więcej niż int
 long int nie mniej niż int
 	często 8 B [−9223372036854775808; 9223372036854775807]
 */
-
-
-void factorial_bad(short num)
-{
-	if (num == 1 || num == 0)
-	{
-		printf("Factorial: 1");
-		return;
-	}
-
-	int tab[tab_max_size];
-	int tab_size = 0;
-
-	int temp[tab_max_size];
-	int temp_size = 0;
-	temp[0] = 1;
-
-	int inc[3];
-	int inc_size = 0;
-
-	tab[0] = 1;
-	tab_size = 1;
-
-	for (int i = 1; i <= num; i++)
-	{
-		if (i < 10)
-		{
-			inc[0] = i;
-			inc_size = 1;
-		}
-		else if (i < 100)
-		{
-			inc[0] = i % 10;
-			inc[1] = (i - (i % 10)) / 10;
-			inc_size = 2;
-		}
-		else if (i < 1000)
-		{
-			inc[0] = i % 10;
-			inc[2] = (i - (i % 100) / 100);
-			inc[1] = ((i - (i % 10)) / 10) - (inc[2] * 10);
-			inc_size = 3;
-		}
-
-		for (int k = 0; k < inc_size; k++)
-		{
-			for (int j = 0; j < tab_size; j++)
-			{
-				temp[j + k] = tab[j] * inc[k];
-				temp_size++;
-			}
-		}
-	}
-
-	for (int i = 0; i < temp_size; i++)
-	{
-		if (temp[i] < 100)
-		{
-			temp[i + 1] += (temp[i] - (temp[i] % 10)) / 10;
-			temp[i] = temp[i] % 10;
-			if (i == temp_size)
-				temp_size++;
-		}
-		else if (temp[i] < 1000)
-		{
-			temp[i + 1] += (temp[i] - (temp[i] % 10)) / 10;
-			temp[i] = temp[i] % 10;
-			if (i == temp_size)
-				temp_size++;
-		}
-	}
-
-	printf("Factorial: ");
-	for (int i = 0; i < temp_size; i++)
-		printf("%d", temp[i]);
-
-	return;
-}
